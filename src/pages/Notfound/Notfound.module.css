@@ -1,0 +1,16 @@
+.container{
+    width:100vw;
+    height:100vh;
+    display: flex;
+    flex-direction: row;
+}
+h1{
+    font-family: "Open Sans",sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 29.96px;
+    text-align: left;
+    color: #000000;
+    margin-left: 6rem;
+    padding: 2rem;
+}

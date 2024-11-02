@@ -146,6 +146,9 @@ function NewTask({openModal,closeModal}) {
                 if (e.response.status === 400) {
                     alert("Invalid Data");
                 }
+                if (e.response.status === 401) {
+                    alert("Please Login/Register to Create a task");
+                }
             }
         }
     }

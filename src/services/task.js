@@ -24,3 +24,11 @@ export const getAllTasks = async () => {
     }
     return res;
 }
+
+export function updateTask(data, id) {
+    const headers = addTokenToHeader({ headers: {} });
+    const res = axios.put(`${import.meta.env.VITE_BASE_URL}/api/v1/user/task/${id}`, data, {
+        headers
+    });
+    return res;
+}

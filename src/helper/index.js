@@ -20,7 +20,6 @@ export function handleApiResponse(res){
             alert("Invalid email or password");
             return null;
         case 201:
-            alert("Registered successfully");
             return res;
         case 200:
             return res;

@@ -1,6 +1,6 @@
 .container{
     width: 100vw;
-    height: 100vh;
+    height: auto;
     display: flex;
     flex-direction: row;
 }
@@ -15,16 +15,19 @@
     position: relative;
     width: 18rem;
     height: 18rem;
-    top: 12rem;
-    left: 22rem;
+    /* top: 12rem;
+    left: 22rem; */
+    top: 10rem;
+    left: 16rem;
 }
 
 .robotImage{
     position: relative;
     width: 13rem;
     height: 17rem;
-    top: 15rem;
-    left: 6rem;
+    /* top: 15rem;
+    left: 6rem; */
+    top:12rem;
 }
 
 .welcomeMessage{
@@ -92,5 +95,5 @@
     line-height: 26.28px;
     text-align: center;
     color: #17A2B8;
-
+    cursor: pointer;
 }

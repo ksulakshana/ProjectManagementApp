@@ -7,29 +7,34 @@ import blue from '../assets/priority/blue.png';
 import red from '../assets/priority/red.png';
 import moreActionsDot from '../assets/priority/moreActionsDot.png';
 import ArrowDown2 from '../assets/boardIcons/ArrowDown2.png';
-import {getUserData} from '../services/auth';
-import {getAllTasks} from '../services/task';
+import {getAllTasks,updateTask} from '../services/task';
 
 function Inprogress() {
   const [tasks,setTasks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isChecked, setIsChecked] = useState(false)
   const [isCheckedCount,setIsCheckedCount] = useState(0);
+
   useEffect(() => {
 
     getAllTasks().then(res => {
-      console.log("inside gettask")
-         console.log(res.data)
          setTasks(res.data);
          setIsLoading(false);            
     })
 
   }, [])
 
+  const updateStatus = async (value, id) => {
+    const formdata = {status:value}
+    await updateTask(formdata,id).then(res => {
+      location.reload();          
+      }).catch((e) => {
+        alert(e.message)
+    });
+  }
+
   const checkHandler = (e) => {
-    
     setIsChecked(!isChecked) ;
-    console.log(e.target.id);
     if(!isChecked){
       setIsCheckedCount((prev) => prev + 1);
       localStorage.setItem(e.target.id,e.target.value);
@@ -37,8 +42,6 @@ function Inprogress() {
         setIsCheckedCount((prev) => prev - 1);
         localStorage.removeItem(e.target.id);  
       }
-
-      console.log(localStorage.getItem(e.target.id));
   }
 
   return (
@@ -105,9 +108,9 @@ function Inprogress() {
                         : ''                      }                
                     </div> 
                     <div className={styles.selectStatus}>
-                        <span>BACKLOG</span>
-                        <span>TO-DO</span>
-                        <span>DONE</span>
+                        <span onClick={() => updateStatus('BACKLOG',task._id)}>BACKLOG</span>
+                        <span onClick={() => updateStatus('TO-DO',task._id)}>TO-DO</span>
+                        <span onClick={() => updateStatus('DONE',task._id)}>DONE</span>
                     </div>
                   </div>
               </div>

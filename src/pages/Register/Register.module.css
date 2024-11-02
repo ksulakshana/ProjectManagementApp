@@ -1,33 +1,36 @@
-.container{
+.registercontainer{
     width: 100vw;
-    height: 100vh;
+    height: auto;
     display: flex;
     flex-direction: row;
 }
 
-.leftSubContainer{
+.registerleftSubContainer{
     background: #17A2B8;
     width: 60vw;
     height: auto;
 }
 
-.circleImage{
+.registercircleImage{
     position: relative;
     width: 18rem;
     height: 18rem;
-    top: 12rem;
-    left: 22rem;
+    /* top: 12rem;
+    left: 22rem; */
+    top: 10rem;
+    left: 16rem;
 }
 
-.robotImage{
+.registerrobotImage{
     position: relative;
     width: 13rem;
     height: 17rem;
-    top: 15rem;
-    left: 6rem;
+    /* top: 15rem; */
+    /* left: 6rem; */
+    top:12rem;
 }
 
-.welcomeMessage{
+.registerwelcomeMessage{
     font-family: "Open Sans", sans-serif;
     font-size: 2rem;
     font-weight: 600;
@@ -38,14 +41,14 @@
     color: #FFFFFF;
 }
 
-.welcomeMessage span{
+.registerwelcomeMessage span{
     font-family: "Open Sans", sans-serif;
     font-size: 1.2rem;
     font-weight: 400;
     text-align: center;
 }
 
-.rightSubContainer{
+.registerrightSubContainer{
     background: #FFFFFF;
     width: 40vw;
     height: auto;
@@ -55,7 +58,7 @@
     align-items: center;
 }
 
-.rightSubContainer h2{
+.registerrightSubContainer h2{
     width: 6rem;
     height: auto;
     padding: 0 0 3rem 0rem;
@@ -92,5 +95,5 @@
     line-height: 26.28px;
     text-align: center;
     color: #17A2B8;
-
+    cursor: pointer;
 }

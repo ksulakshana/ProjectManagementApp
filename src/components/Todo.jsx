@@ -9,7 +9,7 @@ import red from '../assets/priority/red.png';
 import moreActionsDot from '../assets/priority/moreActionsDot.png';
 import ArrowDown2 from '../assets/boardIcons/ArrowDown2.png';
 import {getUserData} from '../services/auth';
-import {getAllTasks} from '../services/task';
+import {getAllTasks , updateTask} from '../services/task';
 import {NewTask} from '../pages/index';
 
 function Todo() {
@@ -23,13 +23,20 @@ function Todo() {
   useEffect(() => {
 
     getAllTasks().then(res => {
-      console.log("inside gettask")
-         console.log(res.data)
          setTasks(res.data);
          setIsLoading(false);            
     })
 
   }, [])
+
+  const updateStatus = async (value, id) => {
+    const formdata = {status:value}
+    await updateTask(formdata,id).then(res => {
+      location.reload();          
+      }).catch((e) => {
+        alert(e.message)
+    });
+  }
 
   const handleModalOpen = () =>{
     setOpenModal(true);
@@ -40,33 +47,10 @@ function Todo() {
 
   const checkHandler = (e) => {
     setIsChecked(!isChecked) ;
-
     if(!isChecked){
-
-      let id = e.target.id;
-      alert(id);
-      let name = id.substring(0, id.length - 2)+"_checkbox";
-      alert(name)
-
-      var checkboxes = document.getElementsByName(name);
-      console.log(checkboxes)
-      var x = 0;
-      for(var i = 0 ; i<checkboxes.length; i++)
-      {
-        if(checkboxes[i].checked==0)
-        {
-          // checkboxes.splice(i,1);
-          alert(i)
-        }
-      }
-      alert("Number of checked checkboxes: "+checkboxes.length);
-
-
       setIsCheckedCount((prev) => prev + 1);
       localStorage.setItem(e.target.id,e.target.value);
-      document.getElementById
       }else{
-        
         setIsCheckedCount((prev) => prev - 1);
         localStorage.removeItem(e.target.id);  
       }
@@ -143,9 +127,9 @@ function Todo() {
                       }                
                     </div> 
                     <div className={styles.selectStatus}>
-                        <span>BACKLOG</span>
-                        <span>PROGRESS</span>
-                        <span>DONE</span>
+                        <span onClick={() => updateStatus('BACKLOG',task._id)} className={styles.backlogstatus}>BACKLOG</span>
+                        <span onClick={() => updateStatus('PROGRESS',task._id)} className={styles.progressstatus}>PROGRESS</span>
+                        <span onClick={() => updateStatus('DONE',task._id)} className={styles.donestatus}>DONE</span>
                     </div>
                   </div>
               </div>

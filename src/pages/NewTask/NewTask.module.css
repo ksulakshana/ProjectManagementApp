@@ -100,8 +100,6 @@ select {
     border: 0;
     padding: 1rem;
     overflow: auto;
-    /* position: relative;
-    top: 1rem; */
     align-content: center;
   }
 

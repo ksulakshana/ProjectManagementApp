@@ -29,56 +29,40 @@ function Analytics() {
     let duedatecount = 0;
 
     getAllTasks().then(res => {
-      console.log("inside gettask")
-         console.log(res.data)
-        //  setTasks(res.data);
-        //  setIsLoading(false);  
          
          for (let i = 0; i < res.data.length; i++) {
           if (res.data[i].status == 'BACKLOG') {
-            console.log(res.data[i].status)
             backtaskcount++;
             setBacklogtasks(backtaskcount);
           }
           else if (res.data[i].status == 'TO-DO') {
-            console.log(res.data[i].status)
             todotaskcount++;
             setTodotasks(todotaskcount);
           }
           else if (res.data[i].status == 'PROGRESS') {
-            console.log(res.data[i].status);
             progresstaskcount++;
             setProgresstasks(progresstaskcount);
           }
           else if(res.data[i].status == 'DONE') {
-            console.log(res.data[i].status);
             donetaskcount++;
             setDonetasks(donetaskcount);
           }
 
           if (res.data[i].priority == 'LOW PRIORITY') {
-            console.log(res.data[i].priority)
             lowcount++;
-            console.log(lowcount)
             setlowPrioritytasks(lowcount);
           }
           else if (res.data[i].priority == 'MODERATE PRIORITY') {
-            console.log(res.data[i].priority)
             moderatecount++;
-            console.log(moderatecount)
             setModeratePrioritytasks(moderatecount);
           }
           else if (res.data[i].priority == 'HIGH PRIORITY') {
-            console.log(res.data[i].priority)
             highcount++;
-            console.log(highcount)
             setHighPrioritytasks(highcount);
           }
           
           if (res.data[i].dueDate !== null) {
-            console.log(res.data[i].dueDate)
             duedatecount++;
-            console.log(duedatecount)
             setDueDatetasks(duedatecount);
           }
 

@@ -21,13 +21,13 @@ export const login = async (data) => {
 
 export const getUserData = async () => {
     const headers = addTokenToHeader({ headers: {} });
-    const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/user/`,{headers}
-    );
-    if (res.status === 401) {
-        localStorage.removeItem("token");
-        alert("You're logged out");
+    if(!localStorage.getItem("token"))
+    {
         window.location.href = "/login";
     }
+    const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/user/`,{headers}
+    );
+    
     return res;
 }
 
@@ -35,10 +35,6 @@ export const getAllUsers = async () => {
     const headers = addTokenToHeader({ headers: {} });
     const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/user/allUsers`,{headers}
     );
-    if (res.status === 401) {
-        localStorage.removeItem("token");
-        alert("You're logged out");
-        window.location.href = "/login";
-    }
+
     return res;
 }

@@ -69,13 +69,15 @@ function LoginForm() {
                 localStorage.setItem("token", token);
                 navigate("/dashboard");
             }
-
             else {
                 alert("Something went wrong");
             }
         }
         catch (e) {
             if (e.response.status === 400) {
+                alert("Invalid email or password");
+            }
+            if (e.response.status === 401) {
                 alert("Invalid email or password");
             }
         }

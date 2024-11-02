@@ -17,6 +17,11 @@ function Board() {
   useEffect(() => {
 
     getUserData().then(res => {
+      if(res.status == 401)
+      {
+        alert("please login to visit the dashboard page")
+        navigate('/login');
+      }
          setUserName(res.data.userdata.name);
     })
 
@@ -29,7 +34,6 @@ function Board() {
           <span className={styles.name}>Welcome! {userName}</span>
           <span className={styles.date}>
             {new Date().toLocaleString("en-US", { day : '2-digit'})}th&nbsp;{new Date().toLocaleString("en-US", { month: "short" })},&nbsp;{new Date().getFullYear()}
-            {/* 12th Jan, 2024 */}
             </span>
         </p> 
       </div>
@@ -43,7 +47,6 @@ function Board() {
               <option value="DEFAULT">This week</option>
               <option>This Month</option>
           </select>
-          {/* </div> */}
         </div>
       </div>
 

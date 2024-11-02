@@ -37,6 +37,7 @@ input {
     font-weight: 400;
     text-align: center;
     color: #FFFFFF;
+    cursor: pointer;
 }
 
 .errorMessage{
