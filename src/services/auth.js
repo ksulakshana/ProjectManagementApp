@@ -3,18 +3,12 @@ import { addTokenToHeader , handleApiResponse } from "../helper";
 
 export const register = async (data) => {
     
-    try{
         const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/user/register`, data, {
             headers: {
                 'Content-Type': "application/x-www-form-urlencoded"
             }
         });
         return handleApiResponse(res);
-    }catch(e){
-        console.log(e);
-        console.log(e.status)
-         return e.status
-    }
 
 }
 

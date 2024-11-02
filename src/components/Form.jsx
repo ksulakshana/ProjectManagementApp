@@ -62,12 +62,12 @@ function Form() {
       });
       if (!isError) {
           const res = await register(formData);
-          
+
           if (res.status === 201) {
               alert("Registered successfully");
               navigate("/login");
           }
-          else if(res === 400){
+          else if(res.data.message === "User Exists"){
               alert("User Exists");
               errorMessages['email'].onError();
           }

@@ -9,7 +9,7 @@ export function addTokenToHeader({headers}){
 }
 
 export function handleApiResponse(res){
-    console.log(res);
+
     switch(res.status){
         case 401:
             localStorage.removeItem("token");
@@ -18,8 +18,9 @@ export function handleApiResponse(res){
             return null;
         case 400:
             alert("Invalid email or password");
-            return res;
+            return null;
         case 201:
+            alert("Registered successfully");
             return res;
         case 200:
             return res;
