@@ -1,4 +1,4 @@
-import React from 'react'
+import React ,{useState,useEffect} from 'react'
 import styles from './Backlog.module.css';
 import { Link } from 'react-router-dom';
 import collapseIcon from '../assets/boardIcons/collapse.png';
@@ -7,8 +7,40 @@ import blue from '../assets/priority/blue.png';
 import red from '../assets/priority/red.png';
 import moreActionsDot from '../assets/priority/moreActionsDot.png';
 import ArrowDown2 from '../assets/boardIcons/ArrowDown2.png';
+import {getUserData} from '../services/auth';
+import {getAllTasks} from '../services/task';
 
 function Backlog() {
+  const [tasks,setTasks] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isChecked, setIsChecked] = useState(false)
+  const [isCheckedCount,setIsCheckedCount] = useState(0);
+  useEffect(() => {
+
+    getAllTasks().then(res => {
+      console.log("inside gettask")
+         console.log(res.data)
+         setTasks(res.data);
+         setIsLoading(false);            
+    })
+
+  }, [])
+
+  const checkHandler = (e) => {
+    
+    setIsChecked(!isChecked) ;
+    console.log(e.target.id);
+    if(!isChecked){
+      setIsCheckedCount((prev) => prev + 1);
+      localStorage.setItem(e.target.id,e.target.value);
+      }else{
+        setIsCheckedCount((prev) => prev - 1);
+        localStorage.removeItem(e.target.id);  
+      }
+
+      console.log(localStorage.getItem(e.target.id));
+  }
+
   return (
     <div className={styles.container}>
         <div className={styles.backlogHeading}>
@@ -16,93 +48,73 @@ function Backlog() {
             <p><Link to="/"><img src={collapseIcon}/></Link></p> 
         </div> 
         <div className={styles.taskBoard}>
-            <div className={styles.showFulltask}>
-                <ul className={styles.firstLine}>
-                  <li><img src={green} alt='low priority'/></li>
-                  <li className={styles.priorityText}>LOW PRIORITY</li>
-                  <li className={styles.assignedTo}>AK</li>
-                  <li className={styles.right}><Link to="/"><img src={moreActionsDot}/></Link></li>
-                </ul>
-                <p className={styles.title}>Hero section</p>
-                <div className={styles.checklist}>
-                  <ul className={styles.checklistHeading}>
-                    <li className={styles.checklistCount}>Checklist (0/3)</li>
-                    <li className={styles.arrow}><Link to="#"><img src={ArrowDown2}/></Link></li>
-                  </ul>
-                  {/* <div className={styles.checklistData}> */}
-                    <ul className={styles.checklistData}>
-                        <li>
-                          <label htmlFor="checkbox1">
-                            <input type="checkbox" name="checkbox1" className={styles.check}/>
-                            <span>Task to be done1</span>
-                          </label>
-                        </li>  
-                        <li>
-                          <label htmlFor="checkbox2">
-                            <input type="checkbox" name="checkbox2" className={styles.check}/>
-                            <span>Task to be done2</span>
-                          </label>
-                        </li>  
-                        {/* <li>
-                          <label className={styles.checkboxContainer}>One
-                            <input type="checkbox"  />
-                            <span className={styles.checkmark}></span>
-                          </label>
-                        </li> */}
-                    </ul>
-                  {/* </div> */}
-                </div>
-                <div className={styles.taskStatus}>
-                  <div className={styles.date}>
-                      <span>Feb 10th</span>
-                  </div>
-                  <div className={styles.selectStatus}>
-                      <span>PROGRESS</span>
-                      <span>TO-DO</span>
-                      <span>DONE</span>
-                  </div>
-                </div>
-            </div>
+        {isLoading ? <p>Loading...</p> : tasks.map((task, idx) => 
 
-            <div className={styles.showFulltask}>
+            (task.status === "BACKLOG") 
+            ?
+              <div key={idx} className={styles.showFulltask}>
                 <ul className={styles.firstLine}>
-                  <li><img src={green} alt='low priority'/></li>
-                  <li className={styles.priorityText}>LOW PRIORITY</li>
-                  <li className={styles.assignedTo}>AK</li>
+                  {
+                    (task.priority === 'HIGH PRIORITY')
+                      ? <li><img src={red} alt='low priority'/></li>
+                      : (task.priority === 'MODERATE PRIORITY') ? <li><img src={blue} alt='low priority'/></li> : <li><img src={green} alt='low priority'/></li>
+                  }
+                    <li className={styles.priorityText}>{task.priority}</li>
+                    <li className={styles.assignedTo}>{task.assignToName}</li>
                   <li className={styles.right}><Link to="/"><img src={moreActionsDot}/></Link></li>
                 </ul>
-                <p className={styles.title}>Hero section</p>
+                  <p className={styles.title}>{task.title}</p>
                 <div className={styles.checklist}>
                   <ul className={styles.checklistHeading}>
-                    <li className={styles.checklistCount}>Checklist (0/3)</li>
-                    <li className={styles.arrow}><Link to="#"><img src={ArrowDown2}/></Link></li>
-                  </ul>
-                    <ul className={styles.checklistData}>
-                        <li>
-                          <label htmlFor="checkbox1">
-                            <input type="checkbox" name="checkbox1" className={styles.check}/>
-                            <span>Task to be done1</span>
-                          </label>
-                        </li>  
-                        <li>
-                          <label htmlFor="checkbox2">
-                            <input type="checkbox" name="checkbox2" className={styles.check}/>
-                            <span>Task to be done2</span>
-                          </label>
-                        </li>  
+                      <li className={styles.checklistCount}>Checklist ({isCheckedCount}/{task.checklists.length})</li>
+                      <li className={styles.arrow}><Link to="#"><img src={ArrowDown2}/></Link></li>
                     </ul>
-                </div>
-                <div className={styles.taskStatus}>
-                  <div className={styles.date}>
-                      <span>Feb 10th</span>
+                      <ul className={styles.checklistData} key="checkboxdatakey">
+                      {task.checklists.map((checkboxData,id) => 
+                          <li>
+                            <label htmlFor="checkbox">
+                              {localStorage.getItem(task._id+'_'+id) !== null ? 
+                              <input id={task._id+'_'+id} type="checkbox" 
+                                      name="checkbox"
+                                      className={styles.check}
+                                      checked
+                                      onChange={checkHandler}
+                                      value={checkboxData}
+                              /> :
+                              <input id={task._id+'_'+id} type="checkbox" 
+                              name="checkbox"
+                              className={styles.check}
+                              checked={isChecked}
+                              onChange={checkHandler}
+                              value={checkboxData}
+                      /> 
+
+                      }
+                              <span id={id}>{checkboxData}</span>
+                            </label>
+                          </li>
+                      )}     
+
+                      </ul>
                   </div>
-                  <div className={styles.selectStatus}>
-                      <span>PROGRESS</span>
-                      <span>TO-DO</span>
-                      <span>DONE</span>
+                  <div className={styles.taskStatus}>
+                  
+                    <div className={styles.date}>
+                    {(task.dueDate !== null) ? 
+                        <span>{new Date(task.dueDate).toLocaleString("en-us",{ day: '2-digit', month: 'short'})}</span>
+                        : ''                      }                
+                    </div> 
+                    <div className={styles.selectStatus}>
+                        <span>TO-DO</span>
+                        <span>PROGRESS</span>
+                        <span>DONE</span>
+                    </div>
                   </div>
-                </div>
-            </div>
+              </div>
+            : ''
+
+        )}
+          
         </div>
     </div>
   )

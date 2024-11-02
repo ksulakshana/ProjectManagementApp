@@ -1,9 +1,32 @@
+.container{
+    visibility: visible;
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    z-index: 1000;
+}
+
 .modalContainer{
-    width:100%;
+    /* width:100%;
     height: 596px;
     display: flex;
     flex-direction: column;
-    padding-left: 1rem;
+    padding-left: 1rem; */
+    width: auto;
+    height: auto;
+    border-radius: 6px;
+    background-color: white;
+    padding-left: 2em;
+    padding-top: 0.5em;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .tasktitle{
@@ -51,17 +74,6 @@
 }
 
 .priority{
-    /* width: Hug (592px)px;
-    height: Hug (31px)px;
-    top: 121px;
-    left: 39px;
-    gap: 12px;
-    display: flex;
-    flex-direction: row;
-    width: fit-content;
-    padding: 1rem; */
-    width: Hug (592px)px;
-    height: Hug (31px)px;
     display: flex;
     flex-direction: row;
     overflow: hidden;
@@ -92,59 +104,14 @@ select {
     top: 1rem; */
     align-content: center;
   }
-/* 
-.priority {
-    display:inline-block;
-    vertical-align:top;
-    overflow:hidden;
-  } */
 
 .priority select option {
     display:inline-block;
-  }
- 
-option{
-    width: Hug (135px)px;
-    height: Fixed (31px)px;
-    padding: 5px 10px 5px 10px;
-    gap: 8px;
+    padding: 0.3rem 0.5rem;
+    margin-right: 1rem;
     border-radius: 8px ;
-    
-border: 1px solid #E2E2E2
-}  
-
-/* 
-.searchContainer{
-    width:200px;
-    display: flex;
-    flex-direction: column;
-
-}
-
-.dropdown{
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    border:1px solid gray;
-}
-
-.dropdown:empty{
-    border:none
-}
-
-.dropdownRow{
-    cursor: pointer;
-    text-align: start;
-    margin:2px 0;
-}
-
-input{
-    width:220px;
-}
-
-.searchInner{
-    display: flex;
-} */
+    border: 1px solid #E2E2E2
+  }
 
 .search{
     position: relative;
@@ -320,6 +287,7 @@ input{
     line-height: 19px;
     text-align: center;
     border-radius: 12px ;
+    cursor: pointer;
 }
 
 .submitButton{
@@ -331,6 +299,7 @@ input{
     line-height: 19px;
     text-align: center;
     color: #FFFFFF;
+    cursor: pointer;
 }
 
 .errorMessage{

@@ -9,15 +9,17 @@ import addPeopleImage from '../assets/boardIcons/addPeopleImg.png';
 import downarrow from '../assets/boardIcons/downarrow.png';
 import {getUserData} from '../services/auth';
 import { useState , useEffect } from 'react';
+
 function Board() {
 
   const [userName,setUserName] = useState('');
-
+  
   useEffect(() => {
 
     getUserData().then(res => {
          setUserName(res.data.userdata.name);
     })
+
   }, [])
 
   return (
@@ -60,7 +62,7 @@ function Board() {
         </div>
 
         <div className={styles.done}>
-          <Done/>
+          <Done />
         </div>
 
       </div>
